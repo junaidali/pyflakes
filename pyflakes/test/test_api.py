@@ -7,6 +7,7 @@ import sys
 import shutil
 import subprocess
 import tempfile
+import stat
 
 from pyflakes.messages import UnusedImport
 from pyflakes.reporter import Reporter
@@ -419,7 +420,7 @@ foo = '\\xyz'
         error.
         """
         sourcePath = self.makeTempFile('')
-        os.chmod(sourcePath, 0)
+        os.chmod(sourcePath, stat.S_IRUSR)
         count, errors = self.getErrors(sourcePath)
 	if sys.platform != 'linux2':
 		test_permissionDenied.skip = "chmod(0) doesn't work on Windows"
