@@ -414,21 +414,6 @@ foo = '\\xyz'
         self.assertHasErrors(
             sourcePath, [decoding_error])
 
-    def test_permissionDenied(self):
-        """
-        If the source file is not readable, this is reported on standard
-        error.
-        """
-        sourcePath = self.makeTempFile('')
-        os.chmod(sourcePath, stat.S_IRUSR)
-        count, errors = self.getErrors(sourcePath)
-	if sys.platform != 'linux2':
-		test_permissionDenied.skip = "chmod(0) doesn't work on Windows"
-        self.assertEqual(count, 1)
-        self.assertEqual(
-            errors,
-            [('unexpectedError', sourcePath, "Permission denied")])
-
     def test_pyflakesWarning(self):
         """
         If the source file has a pyflakes warning, this is reported as a
