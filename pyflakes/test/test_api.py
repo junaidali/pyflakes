@@ -421,6 +421,8 @@ foo = '\\xyz'
         sourcePath = self.makeTempFile('')
         os.chmod(sourcePath, 0)
         count, errors = self.getErrors(sourcePath)
+	if sys.platform != 'linux2':
+		test_permissionDenied.skip = "chmod(0) doesn't work on Windows"
         self.assertEqual(count, 1)
         self.assertEqual(
             errors,
